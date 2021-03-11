@@ -1,0 +1,39 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "BufferGeometry",
+		"generator": "BufferGeometry.toJSON"
+	},
+	"uuid": "7518FC8C-FF74-4238-91F0-5EE17EE89026",
+	"type": "BufferGeometry",
+	"data": {
+		"attributes": {
+			"position": {
+				"itemSize": 3,
+				"type": "Float32Array",
+				"array": [-0.925932,-0.017561,0.027137,-0.893602,-0.208566,0.13825,-0.889071,-0.023379,0.259706],
+				"normalized": false
+			},
+			"normal": {
+				"itemSize": 3,
+				"type": "Float32Array",
+				"array": [-0.985033,-0.077031,0.154194,-0.985033,-0.077031,0.154194,-0.985033,-0.077031,0.154194],
+				"normalized": false
+			},
+			"uv": {
+				"itemSize": 2,
+				"type": "Float32Array",
+				"array": [0,1,0,1,0,1],
+				"normalized": false
+			}
+		},
+		"index": {
+			"type": "Uint16Array",
+			"array": [0,1,2]
+		},
+		"boundingSphere": {
+			"center": [-0.907502,-0.113064,0.143421],
+			"radius": 0.1516
+		}
+	}
+}

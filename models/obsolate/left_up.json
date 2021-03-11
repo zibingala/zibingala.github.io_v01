@@ -1,0 +1,74 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "7648415B-93B0-4976-AF8F-E0441EFC8409",
+			"type": "BufferGeometry",
+			"data": {
+				"attributes": {
+					"position": {
+						"itemSize": 3,
+						"type": "Float32Array",
+						"array": [-0.884971,0.217241,0.151023,-0.925497,0.013732,0.027672,-0.88853,0.008519,0.26074],
+						"normalized": false
+					},
+					"normal": {
+						"itemSize": 3,
+						"type": "Float32Array",
+						"array": [-0.982373,0.09983,0.158045,-0.982373,0.09983,0.158045,-0.982373,0.09983,0.158045],
+						"normalized": false
+					},
+					"uv": {
+						"itemSize": 2,
+						"type": "Float32Array",
+						"array": [0,1,0,1,0,1],
+						"normalized": false
+					}
+				},
+				"index": {
+					"type": "Uint16Array",
+					"array": [0,1,2]
+				},
+				"boundingSphere": {
+					"center": [-0.905234,0.11288,0.144206],
+					"radius": 0.15774
+				}
+			}
+		}],
+	"materials": [
+		{
+			"uuid": "9E4DBCA3-B3E1-4312-B18E-187F7BB78793",
+			"type": "MeshStandardMaterial",
+			"color": 16777215,
+			"roughness": 1,
+			"metalness": 1,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		}],
+	"object": {
+		"uuid": "86AE2613-71A7-467E-9DED-E92787A7E263",
+		"type": "Mesh",
+		"name": "Icosphere002",
+		"userData": {
+			"name": "Icosphere.002"
+		},
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"geometry": "7648415B-93B0-4976-AF8F-E0441EFC8409",
+		"material": "9E4DBCA3-B3E1-4312-B18E-187F7BB78793"
+	}
+}

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" conten="width=100vw, user-scalable=no, minimum-scale=0.9, maximum-scale=1.0">
+    <title>My first three.js app</title>
+
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300&family=Roboto&display=swap"
+        rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <script src="js/three.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/Stats.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/Tween.js"></script>
+    <script src="js/THREEx.KeyboardState.js"></script>
+    <script src="js/THREEx.FullScreen.js"></script>
+    <script src="js/THREEx.WindowResize.js"></script>
+    <script src="js/FRONT.js"></script>
+    <script src="js/postprocessing.js"></script>
+
+
+    <script type="text/javascript" src="js/postprocessing/EffectComposer.js"></script>
+    <script type="text/javascript" src="js/postprocessing/ShaderPass.js"></script>
+    <script type="text/javascript" src="js/postprocessing/MaskPass.js"></script>
+    <script type="text/javascript" src="js/postprocessing/BloomPass.js"></script>
+
+
+    <script type="text/javascript" src="js/shaders/ConvolutionShader.js"></script>
+    <script type="text/javascript" src="js/shaders/CopyShader.js"></script>
+
+    <script type="text/javascript" src="js/shaders/FXAAShader.js"></script>
+    <script type="text/javascript" src="js/shaders/SSAOShader.js"></script>
+    <script type="text/javascript" src="js/shaders/BlendShader.js"></script>
+
+
+
+    <script>
+
+        //GLOBAL MODULE
+
+        var STATE = 0;
+        var WELCOME = true;
+        // IO - scripts! 
+
+        function onDocumentMouseDown(event) {
+            // the following line would stop any other event handler from firing
+            // (such as the mouse's TrackballControls)
+            // event.preventDefault();
+
+            ///// FRONT_beadása kattintásra /////
+
+            FRONT_bool = !FRONT_bool;
+            console.log("mousedown front bool: " + FRONT_bool);
+
+            if (FRONT_bool) {
+
+                raycaster.setFromCamera(mouse, camera);
+                var intersects = raycaster.intersectObjects(scene.children);
+                if (intersects.length > 0) {
+                    if (intersects[0].object.name != "Icosphere" && intersects[0].object.name != "sun") {
+                        // console.log("ClickEER." + intersects[0].object.name);
+
+                        if (intersects[0].object.name == "Icosphere002") {
+                            eval("Icosphere002" + "()")
+                            console.log("eval icosphere002")
+                            STATE = 2;
+                        }
+                        if (intersects[0].object.name == "Icosphere003") {
+                            eval("Icosphere003" + "()");
+                            console.log("eval icosphere003")
+                            STATE = 3;
+                        }
+
+
+
+
+                        document.getElementById("FRONT_div").style.opacity = 1;
+
+                    }
+                    else {
+                        FRONT_bool = false;
+                        STATE = 0;
+                    }
+                }
+
+            }
+            else {
+                if (welcome) { document.getElementById("welcome").style.opacity = 0; welcome = false; }
+                document.getElementById("FRONT_div").style.opacity = 0;
+            }
+
+            /// külső hivatkozás - eval-lal futásának tesztje! fontos lesz a külső js.-ből futó felugró ablakok megjelenítésénél.
+            // var numb = 2;
+            // var hello = 'helloworldconsole'
+            //  hello += numb;
+            // eval(hello + '("here i am")');
+
+
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            //console.log("ide suss")
+            //console.log((event.clientX / window.innerWidth) + '  ' + mouse.y)
+
+
+            // update the mouse variable
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            //console.log("mouseX : " + mouse.x + " mouseY : " + mouse.y);
+            camera.position.y = -mouse.y * camera.fov / 90;
+            camera.position.z = mouse.x * camera.fov / 70;
+            camera.lookAt(scene.position);
+            updateCamera();
+
+
+
+
+            //console.log(camera.position.y);
+
+            // the following line would stop any other event handler from firing
+            // (such as the mouse's TrackballControls)
+            // event.preventDefault();
+
+
+            //MOVE RAYCASTER!! 
+
+            circle.position.y = - mouse.y * camera.fov / 5;
+            circle.position.z = mouse.x * camera.fov / 5;
+
+            // find intersections
+
+
+
+
+
+
+
+
+
+        }
+
+        function onDocumentMouseMove(event) {
+            // the following line would stop any other event handler from firing
+            // (such as the mouse's TrackballControls)
+            // event.preventDefault();
+
+
+
+
+
+            // update the mouse variable
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            //console.log("mouseX : " + mouse.x + " mouseY : " + mouse.y);
+            camera.position.y = -mouse.y * camera.fov / 90;
+            camera.position.z = mouse.x * camera.fov / 70;
+            camera.lookAt(scene.position);
+            updateCamera();
+
+
+
+
+            //console.log(camera.position.y);
+
+            // the following line would stop any other event handler from firing
+            // (such as the mouse's TrackballControls)
+            // event.preventDefault();
+
+
+            //MOVE RAYCASTER!! 
+
+            circle.position.y = - mouse.y * camera.fov / 5;
+            circle.position.z = mouse.x * camera.fov / 5;
+
+            // find intersections
+
+            if (!FRONT_bool) {
+
+
+
+
+                raycaster.setFromCamera(mouse, camera);
+
+                var intersects = raycaster.intersectObjects(scene.children);
+                //console.log(scene.children);
+                // create an array containing all objects in the scene with which the ray intersects
+
+
+                if (intersects.length > 0) {
+                    //console.log(intersects[0]);
+                    // if the closest object intersected is not the currently stored intersection object
+                    if (intersects[0].object.name != INTERSECTED && intersects[0].object.name != "Icosphere" && intersects[0].object.name != "sun") {
+                        // restore previous intersection object (if it exists) to its original color
+                        if (INTERSECTED)
+                            INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+                        // store reference to closest object as current intersection object
+                        INTERSECTED = intersects[0].object;
+                        // store color of closest object (for later restoration)
+                        INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+                        // set a new color for closest object
+                        INTERSECTED.material.color.setHex(0x295f99);
+
+
+                        // focusPercent = 0;
+                        // controls.center = INTERSECTEDpos;
+                        // controls.update();
+                        // camera.lookAt(INTERSECTEDpos);
+                        // console.log("Click." + intersects[0].object.name);
+
+                        // console.log(INTERSECTED);
+
+                    }
+                }
+                else // there are no intersections
+                {
+                    // restore previous intersection object (if it exists) to its original color
+                    if (INTERSECTED)
+                        INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+                    // remove previous intersection object reference
+                    //     by setting current intersection object to "nothing"
+                    INTERSECTED = null;
+                }
+            }
+        }
+
+        function onDocumentMouseWheel(event) {
+            console.log("mousewheel")
+            camera.fov += event.deltaY / 100;
+            updateCamera();
+            console.log(camera.fov)
+            console.log(event.deltaY)
+        }
+
+    </script>
+
+    <div id="infoo">
+
+        <canvas id="info"></canvas>
+    </div>
+
+    <script>
+        //info script
+
+        var text = "helóka!"
+        this.canva = { canvas: info }
+
+        this.scene = new THREE.Scene();
+
+        this.container = document.getElementById(this.canva.canvas.id);
+        this.container.width = this.container.getBoundingClientRect().width;
+        this.container.height = this.container.getBoundingClientRect().height;
+
+        this.renderer = new THREE.WebGLRenderer({ canvas: info, alpha: true });
+        this.renderer.setClearColor(new THREE.Color("rgb(255, 100, 0)"), 0);
+        this.renderer.setSize(container.width, container.height);
+
+        console.log(container.width + " container.wdith")
+        console.log(container.height + " container.heg")
+
+        this.camera = new THREE.PerspectiveCamera(25, container.width / container.height, 0.1, 1000);
+
+        this.geo = new THREE.BoxGeometry(3, 3, 3);
+        this.material1 = new THREE.MeshPhongMaterial({
+            color: 0xFFFFFF,
+            opacity: 0.9,
+            transparent: true,
+        });
+        this.cube1 = new THREE.Mesh(this.geo, this.material1);
+        this.scene.add(this.cube1);
+
+        this.renderer.render(this.scene, this.camera);
+
+
+    </script>
+
+    <div id="BG_DIV">
+
+        <canvas id="artifactCanvas">
+        </canvas>
+
+
+        <section>
+            <script>
+
+                // FRONT_bool ami leveszi a canvas opacity-jének és a FRONT_render() futásának feltétele.
+                var FRONT_bool = true;
+
+                //CANVAS!!
+                var canva = { canvas: artifactCanvas };
+                console.log(canva.canvas.id);
+
+                // standard global variables
+                var container, scene, camera, renderer, controls, stats;
+                var keyboard = new THREEx.KeyboardState();
+                var clock = new THREE.Clock();
+
+                // IO GLOBAL VARIABLES
+
+                var raycaster, mouse = { x: 0, y: 0 }, INTERSECTED;
+
+
+
+                ////////////
+                // CUSTOM //
+                ////////////
+
+                var geometry1, cube1, circle, composer;
+
+                init();
+
+
+
+
+
+                function init() {
+
+                    var docWidth = document.documentElement.offsetWidth;
+
+                    [].forEach.call(
+                        document.querySelectorAll('*'),
+                        function (el) {
+                            if (el.offsetWidth > docWidth) {
+                                console.log(el);
+                            }
+                        }
+                    );
+
+                    //DOM ELEMENT
+                    container = document.getElementById(canva.canvas.id);
+                    console.log(canva.canvas.id);
+                    // document.body.appendChild(container);
+                    console.log(container.getBoundingClientRect().width)
+                    container.width = container.getBoundingClientRect().width;
+                    container.height = container.getBoundingClientRect().height;
+
+
+                    //SCENE
+                    scene = new THREE.Scene();
+
+
+                    //CAMERA
+                    camera = new THREE.PerspectiveCamera(25, container.width / container.height, 0.1, 1000);
+                    camera.position.x = 5;
+                    camera.lookAt(scene.position);
+
+                    //RENDERER
+                    renderer = new THREE.WebGLRenderer(canva);
+                    renderer.setSize(container.width, container.height);
+
+
+                    //PROJECTOR
+                    raycaster = new THREE.Raycaster(); // create once
+
+
+                    //EVENT
+                    // when the mouse moves, call the given function
+                    document.addEventListener('mousemove', onDocumentMouseMove, false);
+                    document.addEventListener('wheel', onDocumentMouseWheel, false);
+
+                    // when the mouse clicks, call the given function
+                    document.addEventListener('mousedown', onDocumentMouseDown, false);
+
+                    //3D
+
+
+
+
+                    /// LOADING OBJECTS FROM THIS STRING LIST
+                    const loader = new THREE.ObjectLoader();
+                    var ObjectList = ["models/sphereic.json", "models/ico_leftup.json", "models/ico_leftdown.json", "models/ico_rightup.json", "models/ico_rightdown.json"];
+                    for (let i = 0; i < ObjectList.length; i++) {
+                        console.log("objectlis[i]: " + ObjectList[i])
+
+                        loader.load(
+                            // resource URL
+                            ObjectList[i],
+
+                            // onLoad callback
+                            // Here the loaded data is assumed to be an object
+                            function (obj) {
+                                if (i > 0) {
+                                    obj.position.x = -3;
+                                    obj.scale.setY(obj.scale.y * 1.05);
+                                }
+                                // Add the loaded object to the scene
+                                scene.add(obj);
+                                console.log("obj added!")
+
+                            },
+
+                            // onProgress callback
+                            function (xhr) {
+                                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                            },
+
+                            // onError callback
+                            function (err) {
+                                console.error('An error happened');
+                            }
+                        );
+
+
+
+
+
+                    }
+                    /* 
+                     loader.load(
+                         // resource URL
+                         "models/geom2.json",
+ 
+                         // onLoad callback
+                         // Here the loaded data is assumed to be an object
+                         function (obj) {
+                             // Add the loaded object to the scene
+                             scene.add(obj);
+                             console.log("obj added!")
+                         },
+ 
+                         // onProgress callback
+                         function (xhr) {
+                             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                         },
+ 
+                         // onError callback
+                         function (err) {
+                             console.error('An error happened');
+                         }
+                     );
+                    
+
+
+                    */
+
+                    //LIGHT
+
+                    const light = new THREE.PointLight(0xffffff, 1, 1000);
+                    light.position.set(0, 0, 0);
+                    scene.add(light);
+
+
+                    //GODRAY EFFECT
+
+                    let directionalLight = new THREE.DirectionalLight(0x295f99, 3);
+                    directionalLight.position.set(-5, 0, 0);
+                    directionalLight.castShadow = true;
+                    scene.add(directionalLight);
+
+
+                    let circleGeo = new THREE.CircleGeometry(60, 10);
+                    let circleMat = new THREE.MeshBasicMaterial({ color: 0x001068 });
+                    circle = new THREE.Mesh(circleGeo, circleMat);
+                    circle.position.set(-200, 0, 0);
+                    circle.rotation.set(0, Math.PI / 2, 0)
+                    circle.scale.setX(1.2)
+                    circle.name = "sun";
+                    scene.add(circle);
+
+                    //EFFECTS
+
+                    let godraysEffect = new POSTPROCESSING.GodRaysEffect(camera, circle, {
+                        resolutionScale: 1,
+                        density: 3,
+                        decay: 0.9,
+                        weight: 0.9,
+                        samples: 100
+                    });
+                    let godraysPass = new POSTPROCESSING.EffectPass(camera, godraysEffect);
+                    godraysPass.renderToScreen = true;
+
+                    // ssaoPass = new POSTPROCESSING.ShaderPass(THREE.SSAOShader);
+                    // ssaoPass.renderToScreen = true;
+                    // ssaoPass.uniforms['tDepth'].value = depthRenderTarget.texture;
+                    // ssaoPass.uniforms['size'].value.set(window.innerWidth, window.innerHeight);
+                    // ssaoPass.uniforms['cameraNear'].value = camera.near;
+                    // ssaoPass.uniforms['cameraFar'].value = camera.far;
+                    // ssaoPass.uniforms['onlyAO'].value = false;
+                    // ssaoPass.uniforms['aoClamp'].value = 1.0;
+                    // ssaoPass.uniforms['lumInfluence'].value = 0.7;
+
+                    let SSAOEffect = new POSTPROCESSING.SSAOEffect(camera, scene, {
+
+                        width: container.width,
+                        height: container.height,
+                        distanceScaling: true,
+                        depthAwareUpsampling: true,
+                        normalDepthBuffer: null,
+                        samples: 100,
+                        rings: 12,
+                        distanceThreshold: 0.09,
+                        distanceFalloff: 0.01,
+                        rangeThreshold: 5e1,
+                        rangeFalloff: 2e1,
+                        minRadiusScale: 0.3,
+                        luminanceInfluence: 0.01,
+                        aoClamp: 0.01,
+                        radius: 1000,
+                        intensity: 100,
+                        bias: 0.1,
+                        fade: 0.9,
+                        opacity: 1,
+                        color: null,
+                        resolutionScale: 1,
+
+                    });
+                    let SSAOPass = new POSTPROCESSING.EffectPass(camera, SSAOEffect);
+                    SSAOPass.renderToScreen = false;
+
+
+
+                    // let bloomEffect = new POSTPROCESSING.BloomEffect(camera, circle, {
+                    //     luminanceThreshold: 1,
+                    //     luminanceSmoothing: 1.021,
+                    //     resolutionScale: 0.1,
+                    //     intensity : 1,
+                    // });
+                    // let bloomPass = new POSTPROCESSING.EffectPass(camera, bloomEffect);
+                    // bloomPass.renderToScreen = true;
+
+
+
+
+                    let renderPass = new POSTPROCESSING.RenderPass(scene, camera);
+
+
+                    let shaderPass = new POSTPROCESSING.ShaderPass();
+                    var effectBloom = new THREE.BloomPass(2, 12, 3.1);
+
+
+                    composer = new POSTPROCESSING.EffectComposer(renderer);
+                    composer.addPass(renderPass);
+
+
+                    composer.addPass(SSAOPass);
+
+                    composer.addPass(godraysPass);
+
+
+                    // composer.addPass(shaderPass);
+
+
+
+                }
+
+
+
+
+                function updateCamera() {
+                    camera.updateProjectionMatrix();
+                }
+
+
+                const animate = function () {
+
+                    setTimeout(function () {
+
+                        requestAnimationFrame(animate);
+
+                    }, 1000 / 50);
+
+
+
+
+                    composer.render(0.1);
+                };
+
+                animate();
+            </script>
+
+
+        </section>
+
+    </div>
+
+
+    <div id="FRONT_div">
+
+        <canvas id="FRONT_canvas">
+
+        </canvas>
+
+
+        <section>
+            <script>
+
+                //CANVAS!!
+                var FRONT_canva = { canvas: FRONT_canvas, alpha: true };
+                console.log(FRONT_canva.canvas.id);
+
+                // standard global variables
+                var FRONT_container, FRONT_scene, FRONT_camera, FRONT_renderer, FRONT_controls, FRONT_stats;
+
+                // IO
+
+
+                //SCENE ELEMENTS:
+                var scene2 = null;
+                var SCENE2_bool = false;
+                var scene2_cube1 = null;
+
+                var scene3 = null;
+                var scene3_cube1 = null;
+                var SCENE3_bool = false;
+
+
+
+
+                ////////////
+                // CUSTOM //
+                ////////////
+
+                var FRONT_opacity = 0.2;
+
+                FRONT_init();
+
+                function FRONT_init() {
+
+                    //DOM ELEMENT
+                    FRONT_container = document.getElementById(FRONT_canva.canvas.id);
+                    console.log(FRONT_canva.canvas.id);
+                    // document.body.appendChild(container);
+                    console.log(FRONT_container.getBoundingClientRect().width)
+                    FRONT_container.width = FRONT_container.getBoundingClientRect().width;
+                    FRONT_container.height = FRONT_container.getBoundingClientRect().height;
+
+
+                    //SCENE
+                    FRONT_scene = new THREE.Scene();
+
+                    //CAMERA
+                    FRONT_camera = new THREE.PerspectiveCamera(75, FRONT_container.width / FRONT_container.height, 0.1, 1000);
+                    FRONT_camera.position.z = 5;
+
+
+                    FRONT_renderer = new THREE.WebGLRenderer(FRONT_canva);
+                    FRONT_renderer.setClearColor(new THREE.Color("rgb(255, 0, 0)"), FRONT_opacity);
+                    FRONT_renderer.setSize(FRONT_container.width, FRONT_container.height);
+
+
+                    //EVENT
+
+
+
+                    //3D
+
+
+                }
+
+
+
+
+
+
+                const FRONT_animate = function () {
+
+                    setTimeout(function () {
+
+                        requestAnimationFrame(FRONT_animate);
+
+                    }, 1000 / 60);
+
+
+
+
+
+                    // console.log(document.getElementById("FRONT_div"));
+                    if (FRONT_bool) {
+                        FRONT_canva.canvas.style.opacity = 1;
+
+
+                        switch (STATE) {
+                            case 0:
+                                console.log("state : " + STATE)
+
+
+                                break;
+                            case 2:
+                                console.log("state : " + STATE)
+                                if (SCENE2_bool) {
+
+                                    scene2_cube1.rotation.y += 0.07;
+                                    FRONT_renderer.render(FRONT_scene, FRONT_camera);
+                                }
+
+
+                                break;
+                            case 3:
+                                console.log("state : " + STATE)
+                                if (SCENE3_bool) {
+
+                                    scene3_cube1.rotation.z += 0.01;
+                                    scene3_cube1.rotation.y += 0.02;
+                                    FRONT_renderer.render(scene3, FRONT_camera);
+                                }
+
+                                break;
+                        }
+
+
+
+
+
+                    }
+                    else {
+                        FRONT_canva.canvas.style.opacity = 0.2;
+                    }
+
+                };
+
+
+
+                FRONT_animate();
+
+
+
+            </script>
+
+
+        </section>
+
+
+        <script>
+            //
+            function Icosphere002() {
+
+
+
+
+                console.log("ico002()" + FRONT_bool);
+                scene2 = new THREE.Scene();
+
+                var scene2_geometry1 = new THREE.BoxGeometry(3, 3, 3);
+                var scene2_material1 = new THREE.MeshPhongMaterial({
+                    color: 0xFFFFFF,
+                    opacity: 0.9,
+                    transparent: true,
+                });
+                scene2_cube1 = new THREE.Mesh(scene2_geometry1, scene2_material1);
+                scene2.add(scene2_cube1);
+
+                var loader = new THREE.FontLoader();
+
+
+                loader.load("fonts/Encode Sans Condensed Thin_Regular.json", function (font) {
+
+                    var textGeo = new THREE.TextGeometry("CV", {
+
+                        font: font,
+
+                        size: 7,
+                        height: 2,
+                        curveSegments: 4,
+
+
+                        bevelThickness: 0.1,
+                        bevelSize: 0.2,
+                        bevelEnabled: false
+
+                    });
+
+                    var textMat = new THREE.MeshLambertMaterial({ color: 0xFF00FF });
+
+                    var textMesh = new THREE.Mesh(textGeo, textMat);
+                    textMesh.position.x = -2
+                    textMesh.position.y = 0
+                    textMesh.position.z = -5
+                    textMesh.rotation.set(0, 0, 0)
+                    textMesh.scale.z = 0.1;
+                    textMesh.scale.x = 0.5;
+                    scene2.add(textMesh);
+                    FRONT_scene = scene2;
+                    scene2 = null;
+
+                })
+
+
+
+
+
+
+
+
+
+                SCENE2_bool = true;
+
+
+
+            }
+
+
+            function Icosphere003() {
+                console.log("icosphoere003()" + FRONT_bool);
+                STATE = 3;
+                console.log("init scene3");
+                scene3 = new THREE.Scene();
+
+
+
+                this.loader = new THREE.TextureLoader(),
+                    this.loader.load("images/portfolio.png", function (texture) {
+                        var scene3_geometry1 = new THREE.BoxGeometry(3, 3, 3);
+                        var scene3_material1 = new THREE.MeshPhongMaterial({
+                            map: texture,
+
+                            opacity: 0.9,
+                            transparent: true,
+                        });
+                        scene3_cube1 = new THREE.Mesh(scene3_geometry1, scene3_material1);
+                        scene3.add(scene3_cube1);
+                        scene3_cube1.position.z = -5;
+                        const light3 = new THREE.PointLight(0xffffff, 1, 1000);
+                        light3.position.set(0, 0, 0);
+                        scene3.add(light3);
+                    })
+
+                SCENE3_bool = true;
+                console.log("SCENE3_bool = true;")
+
+
+
+
+
+
+            }
+
+        </script>
+    </div>
+
+    <div id="welcome">
+        <p>Welcome!<br>
+            <br>
+            Here you find information about me.<br>
+            <br>
+            Best regards,<br>
+            Bredán Máté
+        </p>
+
+    </div>
+
+    <div id="tri2">
+        <h1>
+            <p>CV<br>
+
+                Here you find my CV.<br>
+
+                download:<br>
+                github.com/....<br>
+        </h1>
+
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>
