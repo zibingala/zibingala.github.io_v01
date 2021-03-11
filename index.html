@@ -703,7 +703,7 @@
 
                                     scene3_cube1.rotation.z += 0.01;
                                     scene3_cube1.rotation.y += 0.02;
-                                    FRONT_renderer.render(scene3, FRONT_camera);
+                                    FRONT_renderer.render(FRONT_scene, FRONT_camera);
                                 }
 
                                 break;
@@ -824,10 +824,13 @@
                         const light3 = new THREE.PointLight(0xffffff, 1, 1000);
                         light3.position.set(0, 0, 0);
                         scene3.add(light3);
+                        SCENE3_bool = true;
+                        console.log("SCENE3_bool = true;")
+                        FRONT_scene=null;
+                        FRONT_scene = scene3;
+                        scene3 = null;
                     })
 
-                SCENE3_bool = true;
-                console.log("SCENE3_bool = true;")
 
 
 
